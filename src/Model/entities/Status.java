@@ -8,7 +8,7 @@ public enum Status {
         status = aStatus;
     }
 
-    public String getStatus(){
+    private String getStatus(){
         return status;
     }
     

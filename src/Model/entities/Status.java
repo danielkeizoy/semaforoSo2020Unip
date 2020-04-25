@@ -11,5 +11,9 @@ public enum Status {
     public String getStatus(){
         return status;
     }
+    
+    public void setStatus(Status aStatus){
+        this.status = aStatus.status;
+    }
 
 }

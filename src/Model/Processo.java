@@ -10,14 +10,14 @@ import Model.entities.Status;
 import java.util.Random;
 
 public class Processo {
-    Status status;
-    int tur;
-    String name;
+    public Status status;
+    public int tur;
+    public String name;
     Random rand = new Random();
 
     Processo(int i) {
         this.name = "P" + i;
-        this.tur = rand.nextInt(16);
+        this.tur = rand.nextInt(16) + 1;
         this.status = Status.LIVRE;
     }
 

@@ -12,23 +12,23 @@ import java.util.ArrayList;
  * @author Daniel
  */
 public class Semaforo{
-    ArrayList<Processo> semaforo;
+    public ArrayList<Processo> processos;
     public boolean recursos;
 
     public Semaforo(int qtd) {
-        this.semaforo = new ArrayList();
+        this.processos = new ArrayList();
         this.recursos = false;
 
         for(int i=0;i<qtd;i++){
             Processo process = new Processo(i+1);
-            semaforo.add(process);
+            processos.add(process);
         }
         
     }
     @Override
     public String toString(){
         String string = "";
-        for(Processo iterador: semaforo){
+        for(Processo iterador: processos){
             string += iterador.toString();
         }
         return string;

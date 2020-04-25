@@ -7,6 +7,8 @@ package Controller;
 
 import Model.Processo;
 import Model.Semaforo;
+import Model.entities.Status;
+import java.util.Random;
 
 /**
  *
@@ -15,6 +17,8 @@ import Model.Semaforo;
 public class SemaforoController {
     int qtd;
     Semaforo semaforo;
+    public boolean quarto;
+    public String impressao;
     public SemaforoController(int qtd) {
         this.qtd = qtd;
         this.semaforo = new Semaforo(qtd);
@@ -23,19 +27,56 @@ public class SemaforoController {
     public void start() {
         int n = 4;
         System.out.println(semaforo);
-        //TODO imprime uma vez os dados de cada processo
-
+        Random rand = new Random();
+        int p = 0;
+        p = rand.nextInt(5);
+        Processo proc = semaforo.processos.get(p);
+        if(proc.tur == 0){
+            proc.status.setStatus(Status.FINALIZADO);
+            up(semaforo);
+        }
+        //Segundo passo
+        impressao = semaforo.toString();
         for(int i = 0; i < n; i++){
-            System.out.println(semaforo);
+            System.out.println(impressao);
         }
     }
-
+  
     public void down(Semaforo aSemaforo, Processo aProcesso){
-        if(!(aSemaforo.recursos)){
-
-
-
+        //Terceiro passo
+        if(!(aProcesso.status.equals(Status.EXECUCAO))){
+            impressao = "O processo - " + aProcesso.name + "esta solicitando um recurso." + System.lineSeparator() + impressao;
+            System.out.println(impressao);                    
+        }
+        //Quarto passo
+        quarto = aSemaforo.recursos;
+        System.out.println(impressao);
+        
+        //Quinto passo
+        if(quarto){
+            if(!(aProcesso.status.equals(Status.LIVRE))){
+                aProcesso.status.setStatus(Status.EXECUCAO);
+            }
+            String exec = aProcesso.name;
+            impressao ="Processo em execucao - "+exec + System.lineSeparator()+ impressao;
+            
+        }
+        
+    }
+    
+    public void up(Semaforo aSemaforo){
+        
+        int p = 0;
+        Random rand = new Random();        
+        
+        p = rand.nextInt(5);
+        Processo proc = aSemaforo.processos.get(p);
+        down(aSemaforo,proc);
+        if(!(proc.status.equals(Status.FINALIZADO))){
+            if(proc.tur == 0){
+            proc.status.setStatus(Status.FINALIZADO);
+            aSemaforo.recursos = true;
+            }
         }
     }
-
 }

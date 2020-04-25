@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.Processo;
 import Model.Semaforo;
 
 /**
@@ -20,8 +21,21 @@ public class SemaforoController {
     }
 
     public void start() {
+        int n = 4;
         System.out.println(semaforo);
         //TODO imprime uma vez os dados de cada processo
+
+        for(int i = 0; i < n; i++){
+            System.out.println(semaforo);
+        }
     }
-    
+
+    public void down(Semaforo aSemaforo, Processo aProcesso){
+        if(!(aSemaforo.recursos)){
+
+
+
+        }
+    }
+
 }

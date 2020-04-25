@@ -7,15 +7,8 @@ package View;
 
 import Controller.SemaforoController;
 
-/**
- *
- * @author Daniel
- */
 public class SemaforoSo2020Unip {
 
-    /**s
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         SemaforoController semaforo = new SemaforoController(5);
         semaforo.start();

@@ -5,14 +5,12 @@
  */
 package Model;
 
+import Model.entities.Status;
+
 import java.util.Random;
 
-/**
- *
- * @author Daniel
- */
 public class Processo {
-    String status;
+    Status status;
     int tur;
     String name;
     Random rand = new Random();
@@ -20,6 +18,7 @@ public class Processo {
     Processo(int i) {
         this.name = "P" + i;
         this.tur = rand.nextInt(16);
+        this.status = Status.LIVRE;
     }
 
     @Override

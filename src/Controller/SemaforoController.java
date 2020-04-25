@@ -13,14 +13,15 @@ import Model.Semaforo;
  */
 public class SemaforoController {
     int qtd;
-    Semaforo ls;
+    Semaforo semaforo;
     public SemaforoController(int qtd) {
         this.qtd = qtd;
-        this.ls = new Semaforo(qtd);
+        this.semaforo = new Semaforo(qtd);
     }
 
     public void start() {
-    
+        System.out.println(semaforo);
+        //TODO imprime uma vez os dados de cada processo
     }
     
 }

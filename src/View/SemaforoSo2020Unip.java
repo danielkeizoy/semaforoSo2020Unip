@@ -13,7 +13,7 @@ import Controller.SemaforoController;
  */
 public class SemaforoSo2020Unip {
 
-    /**
+    /**s
      * @param args the command line arguments
      */
     public static void main(String[] args) {

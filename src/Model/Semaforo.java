@@ -6,31 +6,28 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  *
  * @author Daniel
  */
 public class Semaforo{
-    
+    ArrayList<Processo> semaforo;
     
     public Semaforo(int qtd) {
-        ArrayList <LightStage> semaforo = new ArrayList();
-        for(int i=1;i<qtd;i++){
-            LightStage stage = new LightStage(i);
-            stage.name = "Processo "+ i;
-            stage.state = "Sleeping";
-            semaforo.add(stage);
+        this.semaforo = new ArrayList();
+        for(int i=0;i<qtd;i++){
+            Processo process = new Processo(i+1);
+            semaforo.add(process);
         }
         
     }
     @Override
-    public toString(){
+    public String toString(){
         String string = "";
-        for(semaforo:processos)
+        for(Processo iterador: semaforo){
+            string += iterador.toString();
+        }
         return string;
     }
-    
-    
 }

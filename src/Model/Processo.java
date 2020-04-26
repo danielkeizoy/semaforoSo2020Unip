@@ -22,11 +22,14 @@ public class Processo {
     public void setStatus(String aString){
         this.status = aString;
     }
-
+    
+    public String getStatus(){
+        return this.status;
+    }
     @Override
     public String toString(){
         String newLine = System.lineSeparator();
-        String stringa = "Processo - " + this.name + newLine + "Tempo - "+ this.tur + newLine + "String - " + this.status + newLine;
+        String stringa = "Processo - " + this.name + newLine + "Tempo - "+ this.tur + newLine + "Status - " + getStatus() + newLine;
         return stringa;
     }
 

@@ -42,7 +42,7 @@ public class SemaforoController {
         //Segundo passo
         impressao = semaforo.toString();
         for(int i = 0; i < n; i++){
-            System.out.println(impressao);
+            System.out.println(semaforo.toString());
         }
         
         while(tempoTotal > 0){
@@ -64,7 +64,7 @@ public class SemaforoController {
         TimeUnit.SECONDS.sleep(2);
         //Terceiro passo
         if(!(aProcesso.status.equalsIgnoreCase("Em execucao"))){
-            impressao = "O processo - " + aProcesso.name + " esta solicitando um recurso." + System.lineSeparator() + impressao;
+            impressao = "O processo - " + aProcesso.name + " esta solicitando um recurso." + System.lineSeparator() + semaforo.toString();
             System.out.println(impressao);                    
         }
         
@@ -73,24 +73,33 @@ public class SemaforoController {
         System.out.println(impressao);
         
         //Quinto passo
+        String inExec = "";
         if(quarto){
             if((aProcesso.status.equalsIgnoreCase("Livre")) || (aProcesso.status.equalsIgnoreCase("Dormindo"))){
                 System.out.println("processo entrou em execucao"+ System.lineSeparator());
                 aProcesso.setStatus("Em execucao");
-            }            
-            String inExec = "Nao ha processo em execucao." + System.lineSeparator();
+                inExec = "Processo em execucao - " + aProcesso.name + System.lineSeparator();
+                updateSemaforo(aSemaforo,aProcesso);
+            }
+                        
             
             //oitavo passo
             for(Processo iterador: aSemaforo.processos){
-                if((iterador.status.equalsIgnoreCase("Em execucao"))){
-                    System.out.println("achei um processo em execucao"+ System.lineSeparator());
-                    inExec = "Processo em execucao - " +iterador.name+ System.lineSeparator();
-                }   
+                if(iterador.status.equalsIgnoreCase("Em execucao")){
+                    inExec = "Nao ha processo em execucao." + System.lineSeparator();                    
+                }
+                else{
+                    inExec = "Processo em execucao - " + iterador.name + System.lineSeparator();
+                    System.out.println("Achei um processo em execucao, o processo " + aProcesso.name + System.lineSeparator());
+                }
             }
             impressao = inExec + impressao;
         }        
         
         //Sexto passo
+        TimeUnit.SECONDS.sleep(2); // sleep 2 sec
+        System.out.println("Espera 2 segundos." + System.lineSeparator());
+        System.out.println(inExec + semaforo.toString());
         aProcesso.tur--;
         if(aProcesso.tur == 0){
             System.out.println("processo finalizado"+ System.lineSeparator());
@@ -119,5 +128,14 @@ public class SemaforoController {
 //            aSemaforo.recursos = true;
 //            }
 //        }
+    }
+
+    private void updateSemaforo(Semaforo aSemaforo, Processo aProcesso) {
+        for(Processo iterador: aSemaforo.processos){
+            if(iterador.name.equalsIgnoreCase(aProcesso.name)){
+                int i = aSemaforo.processos.indexOf(iterador);
+                aSemaforo.processos.set(i, aProcesso);
+            }
+        }
     }
 }

@@ -71,14 +71,14 @@ public class SemaforoController {
         //Quarto passo
         quarto = aSemaforo.recursos;
         System.out.println(impressao);
+//        System.out.println("Quarto passo aqui" + System.lineSeparator());
         
         //Quinto passo
-        String inExec = "";
+        String inExec = "Nao ha processo em execucao." + System.lineSeparator(); 
         if(quarto){
             if((aProcesso.status.equalsIgnoreCase("Livre")) || (aProcesso.status.equalsIgnoreCase("Dormindo"))){
-                System.out.println("processo entrou em execucao"+ System.lineSeparator());
-                aProcesso.setStatus("Em execucao");
-                inExec = "Processo em execucao - " + aProcesso.name + System.lineSeparator();
+//                System.out.println("processo entrou em execucao"+ System.lineSeparator());
+                aProcesso.setStatus("Em execucao");               
                 updateSemaforo(aSemaforo,aProcesso);
             }
                         
@@ -86,21 +86,19 @@ public class SemaforoController {
             //oitavo passo
             for(Processo iterador: aSemaforo.processos){
                 if(iterador.status.equalsIgnoreCase("Em execucao")){
-                    inExec = "Nao ha processo em execucao." + System.lineSeparator();                    
-                }
-                else{
-                    inExec = "Processo em execucao - " + iterador.name + System.lineSeparator();
-                    System.out.println("Achei um processo em execucao, o processo " + aProcesso.name + System.lineSeparator());
+                inExec = "Processo em execucao - " + iterador.name + System.lineSeparator();
+//                System.out.println("Achei um processo em execucao, o processo " + aProcesso.name + System.lineSeparator());
                 }
             }
-            impressao = inExec + impressao;
+            impressao = inExec + aSemaforo.toString();
         }        
         
         //Sexto passo
-        TimeUnit.SECONDS.sleep(2); // sleep 2 sec
-        System.out.println("Espera 2 segundos." + System.lineSeparator());
-        System.out.println(inExec + semaforo.toString());
+        TimeUnit.SECONDS.sleep(1); // sleep 1 sec
+//        System.out.println("Espera 2 segundos." + System.lineSeparator());
+        System.out.println(impressao);
         aProcesso.tur--;
+        updateSemaforo(aSemaforo,aProcesso);
         if(aProcesso.tur == 0){
             System.out.println("processo finalizado"+ System.lineSeparator());
             up(aSemaforo, aProcesso);
@@ -111,23 +109,12 @@ public class SemaforoController {
     public void up(Semaforo theSemaforo, Processo theProcesso){
         //sexto passo
         System.out.println(impressao);
+//        System.out.println("DEU UP" + System.lineSeparator());
         
         //setimo passo
         theProcesso.setStatus("Finalizado");
+        updateSemaforo(theSemaforo,theProcesso);
         theSemaforo.recursos = true;
-        
-//        int p = 0;
-//        Random rand = new Random();        
-//        
-//        p = rand.nextInt(5);
-//        Processo proc = aSemaforo.processos.get(p);
-//        down(aSemaforo,proc);
-//        if(!(proc.String.equals(String.FINALIZADO))){
-//            if(proc.tur == 0){
-//            proc.setString(String.FINALIZADO);
-//            aSemaforo.recursos = true;
-//            }
-//        }
     }
 
     private void updateSemaforo(Semaforo aSemaforo, Processo aProcesso) {

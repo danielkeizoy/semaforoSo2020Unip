@@ -29,7 +29,7 @@ public class Processo {
     @Override
     public String toString(){
         String newLine = System.lineSeparator();
-        String stringa = "Processo - " + this.name + newLine + "Tempo - "+ this.tur + newLine + "Status - " + getStatus() + newLine;
+        String stringa = "Processo - " + this.name + newLine + "Tempo - "+ this.tur + newLine + "Status - " + getStatus() + newLine + newLine;
         return stringa;
     }
 

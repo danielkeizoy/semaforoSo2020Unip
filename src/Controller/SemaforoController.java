@@ -7,8 +7,8 @@ package Controller;
 
 import Model.Processo;
 import Model.Semaforo;
-import Model.entities.Status;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -26,7 +26,7 @@ public class SemaforoController {
         this.semaforo = new Semaforo(qtd);
     }
 
-    public void start() {
+    public void start() throws InterruptedException {
         int n = 4;
         System.out.println(semaforo);
         Random rand = new Random();
@@ -44,21 +44,27 @@ public class SemaforoController {
         for(int i = 0; i < n; i++){
             System.out.println(impressao);
         }
+        
         while(tempoTotal > 0){
-            if(proc.status.equals(Status.FINALIZADO)){              
-                p = new Random().nextInt(5);
-                proc = semaforo.processos.get(p);
+            if(proc.status.equalsIgnoreCase("Finalizado")){
+                int q = 0;
+                while(p == q){
+                    q = new Random().nextInt(5);
+                    System.out.println(q);
+                }
+                proc = semaforo.processos.get(q);
             }
-            down(semaforo, proc);
-            
+            else{
+                down(semaforo, proc);
+            }
         }
     }
   
-    public void down(Semaforo aSemaforo, Processo aProcesso){
-
+    public void down(Semaforo aSemaforo, Processo aProcesso) throws InterruptedException{
+        TimeUnit.SECONDS.sleep(2);
         //Terceiro passo
-        if(!(aProcesso.status.equals(Status.EXECUCAO))){
-            impressao = "O processo - " + aProcesso.name + "esta solicitando um recurso." + System.lineSeparator() + impressao;
+        if(!(aProcesso.status.equalsIgnoreCase("Em execucao"))){
+            impressao = "O processo - " + aProcesso.name + " esta solicitando um recurso." + System.lineSeparator() + impressao;
             System.out.println(impressao);                    
         }
         
@@ -68,14 +74,16 @@ public class SemaforoController {
         
         //Quinto passo
         if(quarto){
-            if((aProcesso.status.equals(Status.LIVRE)) || (aProcesso.status.equals(Status.DORMINDO))){
-                aProcesso.status.setStatus(Status.EXECUCAO);
+            if((aProcesso.status.equalsIgnoreCase("Livre")) || (aProcesso.status.equalsIgnoreCase("Dormindo"))){
+                System.out.println("processo entrou em execucao"+ System.lineSeparator());
+                aProcesso.setStatus("Em execucao");
             }            
-            String inExec = "Nao ha processo em execucao.";
+            String inExec = "Nao ha processo em execucao." + System.lineSeparator();
             
             //oitavo passo
             for(Processo iterador: aSemaforo.processos){
-                if((iterador.status.equals(Status.EXECUCAO))){
+                if((iterador.status.equalsIgnoreCase("Em execucao"))){
+                    System.out.println("achei um processo em execucao"+ System.lineSeparator());
                     inExec = "Processo em execucao - " +iterador.name+ System.lineSeparator();
                 }   
             }
@@ -85,6 +93,7 @@ public class SemaforoController {
         //Sexto passo
         aProcesso.tur--;
         if(aProcesso.tur == 0){
+            System.out.println("processo finalizado"+ System.lineSeparator());
             up(aSemaforo, aProcesso);
         }
         
@@ -95,7 +104,7 @@ public class SemaforoController {
         System.out.println(impressao);
         
         //setimo passo
-        theProcesso.status.setStatus(Status.FINALIZADO);
+        theProcesso.setStatus("Finalizado");
         theSemaforo.recursos = true;
         
 //        int p = 0;
@@ -104,9 +113,9 @@ public class SemaforoController {
 //        p = rand.nextInt(5);
 //        Processo proc = aSemaforo.processos.get(p);
 //        down(aSemaforo,proc);
-//        if(!(proc.status.equals(Status.FINALIZADO))){
+//        if(!(proc.String.equals(String.FINALIZADO))){
 //            if(proc.tur == 0){
-//            proc.status.setStatus(Status.FINALIZADO);
+//            proc.setString(String.FINALIZADO);
 //            aSemaforo.recursos = true;
 //            }
 //        }

@@ -9,7 +9,7 @@ import Controller.SemaforoController;
 
 public class SemaforoSo2020Unip {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         SemaforoController semaforo = new SemaforoController(5);
         semaforo.start();
     }

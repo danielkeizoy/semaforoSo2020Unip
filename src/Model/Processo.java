@@ -5,12 +5,10 @@
  */
 package Model;
 
-import Model.entities.Status;
-
 import java.util.Random;
 
 public class Processo {
-    public Status status;
+    public String status;
     public int tur;
     public String name;
     Random rand = new Random();
@@ -18,15 +16,18 @@ public class Processo {
     Processo(int i) {
         this.name = "P" + i;
         this.tur = rand.nextInt(16) + 1;
-        this.status = Status.LIVRE;
+        this.status = "Livre";
+    }
+    
+    public void setStatus(String aString){
+        this.status = aString;
     }
 
     @Override
     public String toString(){
-        String string = "";
         String newLine = System.lineSeparator();
-        string = "Processo - " + this.name + newLine + "Tempo - "+ this.tur + newLine + "Status - " + this.status + newLine;
-        return string;
+        String stringa = "Processo - " + this.name + newLine + "Tempo - "+ this.tur + newLine + "String - " + this.status + newLine;
+        return stringa;
     }
 
 }

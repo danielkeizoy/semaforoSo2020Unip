@@ -17,7 +17,7 @@ public class Semaforo{
 
     public Semaforo(int qtd) {
         this.processos = new ArrayList();
-        this.recursos = false;
+        this.recursos = true;
 
         for(int i=0;i<qtd;i++){
             Processo process = new Processo(i+1);

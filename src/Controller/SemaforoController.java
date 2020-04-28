@@ -16,23 +16,25 @@ import java.util.concurrent.TimeUnit;
  */
 public class SemaforoController {
     
-    int qtd;
+    int quantidadeDeProcessos;
     Semaforo semaforo;
     public boolean quarto;
     public String impressao;
     
-    public SemaforoController(int qtd) {
-        this.qtd = qtd;
-        this.semaforo = new Semaforo(qtd);
+    public SemaforoController(int umaQuantidadeDeProcessos) {
+        this.quantidadeDeProcessos = umaQuantidadeDeProcessos;
+        this.semaforo = new Semaforo(umaQuantidadeDeProcessos);
     }
 
     public void start() throws InterruptedException {
-        int n = 4;
+        int quatroPrintsSegundoPasso = 4;
         System.out.println(semaforo);
-        Random rand = new Random();
-        int p = 0;
-        p = rand.nextInt(5);
-        Processo proc = semaforo.processos.get(p);
+        
+        Random randomizador = new Random();
+        
+        int processoSelecionadoRandomicamente = 0;
+        processoSelecionadoRandomicamente = randomizador.nextInt(5);
+        Processo processoEscolhido = semaforo.processos.get(processoSelecionadoRandomicamente);
         
         //Oitavo passo 
         int tempoTotal = 0;
@@ -41,21 +43,23 @@ public class SemaforoController {
         }
         //Segundo passo
         impressao = semaforo.toString();
-        for(int i = 0; i < n; i++){
+        for(int i = 0; i < quatroPrintsSegundoPasso; i++){
             System.out.println(semaforo.toString());
         }
         
         while(tempoTotal > 0){
-            if(proc.status.equalsIgnoreCase("Finalizado")){
+            if(processoEscolhido.status.equalsIgnoreCase("Finalizado")){
+
+                //Não entendi essa variável q.
                 int q = 0;
-                while(p == q){
+                while(processoSelecionadoRandomicamente == q){
                     q = new Random().nextInt(5);
                     System.out.println(q);
                 }
-                proc = semaforo.processos.get(q);
+                processoEscolhido = semaforo.processos.get(q);
             }
             else{
-                down(semaforo, proc);
+                down(semaforo, processoEscolhido);
             }
         }
     }

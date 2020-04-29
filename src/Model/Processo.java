@@ -12,11 +12,13 @@ public class Processo {
     public int tur;
     public String name;
     Random rand = new Random();
+    public boolean solicitandoRecurso;
 
-    Processo(int i) {
+    public Processo(int i) {
         this.name = "P" + i;
         this.tur = rand.nextInt(16) + 1;
         this.status = "Livre";
+        this.solicitandoRecurso = false;
     }
     
     public void setStatus(String aString){

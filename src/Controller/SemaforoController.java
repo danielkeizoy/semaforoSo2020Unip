@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  *
- * @author Daniel
+ * @author Daniel & Vitor
  */
 public class SemaforoController {
     
